@@ -9,8 +9,8 @@ public class Calculator {
         int number2 = 0;
 
         if (num1.matches("^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$") && num2.matches("^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$")) {
-            number1 = parseRomanNumeral(num1);
-            number2 = parseRomanNumeral(num2);
+            number1 = CalcRoman.parseRomanNumeral(num1);
+            number2 = CalcRoman.parseRomanNumeral(num2);
 
         }
         if ((num1.matches("[0-9]") || num1.matches("10")) && (num2.matches("[0-9]") || num2.matches("10"))) {
@@ -67,21 +67,22 @@ public class Calculator {
 
     }
 
-    public static int parseRomanNumeral(String romanNumeral) {
+    class CalcRoman {
+        public static int parseRomanNumeral(String romanNumeral) {
 
-        String[] romanNum = new String[]{"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
-        {
+            String[] romanNum = new String[]{"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
+            {
 
-            for (int i = 0; i < 11; i++) {
-                if (romanNum[i].equals(romanNumeral)) {
-                    return i;
+                for (int i = 0; i < 11; i++) {
+                    if (romanNum[i].equals(romanNumeral)) {
+                        return i;
+                    }
                 }
+                throw new NullPointerException("Неверный символ");
             }
-            throw new NullPointerException("Неверный символ");
+
+
         }
-
-
     }
 }
-
 
