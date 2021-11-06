@@ -1,0 +1,87 @@
+import java.util.Scanner;
+
+public class Calculator {
+    public static void main(String[] args) {
+        String expression = getExpression();
+        String num1 = getNum1(expression);
+        String num2 = getNum2(expression);
+        int number1 = 0;
+        int number2 = 0;
+
+        if (num1.matches("^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$") && num2.matches("^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$")) {
+            number1 = parseRomanNumeral(num1);
+            number2 = parseRomanNumeral(num2);
+
+        }
+        if ((num1.matches("[0-9]") || num1.matches("10")) && (num2.matches("[0-9]") || num2.matches("10"))) {
+            number1 = Integer.parseInt(num1);
+            number2 = Integer.parseInt(num2);
+
+        }
+        String operation = getOperation(expression);
+        int result = calc(number1, number2, operation);
+        System.out.println("Результат");
+        System.out.println(result);
+    }
+
+    public static String getExpression() {
+        System.out.println(("Введите выражение"));
+        Scanner sc = new Scanner(System.in);
+        String newExpression = sc.nextLine();
+        newExpression = newExpression.toUpperCase();
+        newExpression = newExpression.replaceAll(" ", "");
+        return newExpression;
+    }
+
+    private static String getOperation(String expression) {
+        return expression.replaceAll("[0-9A-Za-z]", "");
+    }
+
+    private static String getNum2(String expression) {
+        String a = getOperation(expression);
+        int b = expression.indexOf(a);
+        String c = expression.substring(b + 1);
+        return c;
+    }
+
+    public static String getNum1(String expression) {
+        String a = getOperation(expression);
+        int b = expression.indexOf(a);
+        String c = expression.substring(0, b);
+        return c;
+
+    }
+
+    private static int calc(int number1, int number2, String operation) {
+        if (operation.contains("+")) {
+            return number1 + number2;
+        } else if (operation.contains("-")) {
+            return number1 - number2;
+        } else if (operation.contains("*")) {
+            return number1 * number2;
+        } else if (operation.contains("/")) {
+            return number1 / number2;
+        } else {
+            throw new NullPointerException("Неверный символ");
+        }
+
+    }
+
+    public static int parseRomanNumeral(String romanNumeral) {
+
+        String[] romanNum = new String[]{"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
+        {
+
+            for (int i = 0; i < 11; i++) {
+                if (romanNum[i].equals(romanNumeral)) {
+                    return i;
+                }
+            }
+            throw new NullPointerException("Неверный символ");
+        }
+
+
+    }
+}
+
+
